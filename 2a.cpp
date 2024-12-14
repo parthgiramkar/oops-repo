@@ -158,5 +158,26 @@ initialization is permitted.
 • Only one copy of that member is created for the entire class and is shared by all the
 objects of that class.
 • It is the visible only within the class but its lifetime is the entire program
+
+Theory:
+Friend functions:
+In principle, private and protected members of a class cannot be accessed from outside the
+same class in which they are declared. However, this rule does not affect friends. Friends are
+functions or classes declared as such. If we want to declare an external function as friend of a
+class, thus allowing this function to have access to the private and protected members of this
+class, we do it by declaring a prototype of this external function within the class, and
+preceding it with the keyword friend.
+Properties of friend function:
+• It is not in the scope of the class to which it has been declared as friend.
+• Since it is not in the scope of the class , it cannot be called using the object of that
+class
+• It can be invoked like a normal function w/o the help of any object.
+• It can be declared in private or in the public part of the class.
+• Unlike member functions, it cannot access the member names directly and has to
+use an object name and dot operator with each member name.
+A pointer is a derived data type that refers to another data variable by storing the variables
+memory address rather than data.
+Declaration of pointer variable is in the following form-
+  Data_type * ptr_var;
 */
 
