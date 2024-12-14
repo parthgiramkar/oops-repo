@@ -1,3 +1,108 @@
+#include <iostream>
+#include <string>
+using namespace std;
+
+class Student {
+private:
+    string name;
+    int rollNumber;
+    string className;
+    char division;
+    string dob;
+    string bloodGroup;
+    string address;
+    string telephoneNumber;
+    string drivingLicenseNo;
+
+    static int StudentCount; // Static member to track total students
+
+public:
+    // Default Constructor
+    Student() : name(""), rollNumber(0), className(""), division(' '), dob(""), bloodGroup(""), address(""), telephoneNumber(""), drivingLicenseNo("") {
+        StudentCount++;
+    }
+
+    // Parameterized Constructor
+    Student(string n, int roll, string c, char div, string dob, string bg, string addr, string tel, string dl)
+        : name(n), rollNumber(roll), className(c), division(div), dob(dob), bloodGroup(bg), address(addr), telephoneNumber(tel), drivingLicenseNo(dl) {
+        StudentCount++;
+    }
+
+    // Destructor
+    ~Student() {
+        StudentCount--;
+    }
+
+    // Static function to get the total student count
+    static int getStudentCount() {
+        return StudentCount;
+    }
+
+    // Function to input student details
+    void setValues() {
+        cout << "Enter Name: ";
+        cin.ignore();
+        getline(cin, name);
+        cout << "Enter Roll Number: ";
+        cin >> rollNumber;
+        cin.ignore();
+        cout << "Enter Class: ";
+        getline(cin, className);
+        cout << "Enter Division: ";
+        cin >> division;
+        cin.ignore();
+        cout << "Enter Date of Birth (DD/MM/YYYY): ";
+        getline(cin, dob);
+        cout << "Enter Blood Group: ";
+        getline(cin, bloodGroup);
+        cout << "Enter Address: ";
+        getline(cin, address);
+        cout << "Enter Telephone Number: ";
+        getline(cin, telephoneNumber);
+        cout << "Enter Driving License No: ";
+        getline(cin, drivingLicenseNo);
+    }
+
+    // Inline function to display student details
+    inline void display() const {
+        cout << "Name: " << name << endl;
+        cout << "Roll Number: " << rollNumber << endl;
+        cout << "Class: " << className << endl;
+        cout << "Division: " << division << endl;
+        cout << "Date of Birth: " << dob << endl;
+        cout << "Blood Group: " << bloodGroup << endl;
+        cout << "Address: " << address << endl;
+        cout << "Telephone Number: " << telephoneNumber << endl;
+        cout << "Driving License No: " << drivingLicenseNo << endl;
+    }
+};
+
+int Student::StudentCount = 0; // Initialize static member
+
+int main() {
+    int no;
+    cout << "Enter the number of Students: ";
+    cin >> no;
+
+    Student* students = new Student[no]; // Dynamic memory allocation
+
+    for (int i = 0; i < no; i++) {
+        cout << "\nEntering details for Student " << (i + 1) << ":" << endl;
+        students[i].setValues();
+    }
+
+    cout << "\nStudent Details:\n";
+    for (int i = 0; i < no; i++) {
+        cout << "\nStudent " << (i + 1) << " Details:" << endl;
+        students[i].display();
+    }
+
+    cout << "\nTotal Number of Students: " << Student::getStudentCount() << endl;
+
+    delete[] students; // Free dynamically allocated memory
+
+    return 0;
+}
 
    
 
