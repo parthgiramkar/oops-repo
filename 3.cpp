@@ -11,13 +11,12 @@ public:
 
     void setData() {
         cout << "Enter title: ";
-        getline(cin, title);
+        getline(cin >> ws, title);  // Use `cin >> ws` to discard leading whitespace, including newlines
         cout << "Enter price: ";
         cin >> price;
-        cin.ignore(); // To ignore the newline character left in the buffer
     }
 
-    void display() const {
+    void display() {
         cout << "Title: " << title << endl;
         cout << "Price: " << price << endl;
     }
@@ -33,10 +32,9 @@ public:
         Publication::setData();
         cout << "Enter page count: ";
         cin >> pageCount;
-        cin.ignore();
     }
 
-    void display() const {
+    void display() {
         Publication::display();
         cout << "Page Count: " << pageCount << endl;
     }
@@ -52,10 +50,9 @@ public:
         Publication::setData();
         cout << "Enter playing time (in minutes): ";
         cin >> playingTime;
-        cin.ignore();
     }
 
-    void display() const {
+    void display()  {
         Publication::display();
         cout << "Playing Time: " << playingTime << " minutes" << endl;
     }
@@ -69,7 +66,7 @@ int main() {
     book.setData();
 
     cout << "\nEnter details for Tape:" << endl;
-    tape.setData();
+    tape.setData();to you
 
     cout << "\nDetails of Book:" << endl;
     book.display();
@@ -84,7 +81,14 @@ int main() {
 
 
 
+
+
+
 /*
+cin >> ws:
+
+The ws manipulator skips any leading whitespace, including newlines left in the input buffer.
+This ensures getline works correctly to read the full title after a numeric input.
 Inheritance:
 Inheritance in Object Oriented Programming can be described as a process of
 creating new classes from existing classes. New classes inherit some of the properties
