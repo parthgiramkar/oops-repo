@@ -79,6 +79,30 @@ How to read from file??
 using stream extraction operator (>>). You use the operator in the samewayyou use it to read user inputfrom the keyboard. However, instead of usingthe
 cin object, you use the ifstream/ fstream object.
 
+ios
+├── istream (Input Stream)
+│   └── ifstream (Input File Stream)
+├── ostream (Output Stream)
+│   ├── ofstream (Output File Stream)
+│   └── clog (Log Stream)
+└── iostream (Input/Output Stream)
+    └── fstream (File Stream: Input + Output)
+ostream:
+
+Base class for output operations.
+Used for writing data (e.g., cout writes to the console).
+ofstream inherits ostream to handle file output.
+istream:
+
+Base class for input operations.
+Used for reading data (e.g., cin reads from the keyboard).
+ifstream inherits istream to handle file input.
+fstream:
+used to create file
+Combines both istream and ostream.
+Allows reading from and writing to the same file.
+
+
 the fstream library -
   • ofstream– This class represents an output stream. It’s used for creating files and writing information to files.
   • ifstream– This class represents an input stream. It’s used for reading information from data files.
