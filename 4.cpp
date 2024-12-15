@@ -1,28 +1,28 @@
 #include <iostream>
 #include <fstream>
-#include <string>
 using namespace std;
 
 int main() {
+    // Open file for writing
     fstream fs;
+    fs.open("file.txt", ios::out);
 
-    // Step 1: Open the file for writing
-    fs.open("file.dat", ios::out);
     if (!fs) {
-        cerr << "Error: Could not open the file for writing." << endl;
-        return 1;
+        cerr << "Error: Could not open file for writing." << endl;
+        return 1;  // Exit the program with an error code
     }
 
     // Write data to the file
     fs << "Hello Everyone." << endl;
     fs << "How are you all?" << endl;
-    fs.close(); // Close the file after writing
 
-    // Step 2: Open the file for reading
-    fs.open("file.dat", ios::in);
+    fs.close();  // Close the file after writing
+
+    // Open file for reading
+    fs.open("file.txt", ios::in);
     if (!fs) {
-        cerr << "Error: Could not open the file for reading." << endl;
-        return 1;
+        cerr << "Error: Could not open file for reading." << endl;
+        return 1;  // Exit the program with an error code
     }
 
     // Read data from the file and display it
@@ -30,10 +30,18 @@ int main() {
     while (getline(fs, line)) {
         cout << line << endl;
     }
-    fs.close(); // Close the file after reading
 
+    fs.close();  // Close the file after reading
     return 0;
 }
+
+
+
+
+
+
+
+
 
 
 
