@@ -1,142 +1,112 @@
 #include <iostream>
 #include <vector>
-#include <algorithm>
 #include <string>
 
 using namespace std;
 
-// Define a class to hold personal records
 class PersonalRecord {
-private:
+public:
     string name;
-    string dob;   // Date of Birth in YYYY-MM-DD format
+    string dob;  // Date of Birth
     string phoneNumber;
 
-public:
-    // Constructor for ease of record creation
+    // Constructor to initialize the personal record
     PersonalRecord(string n, string d, string p) : name(n), dob(d), phoneNumber(p) {}
 
     // Function to display record details
     void display() const {
         cout << "Name: " << name << ", DOB: " << dob << ", Phone: " << phoneNumber << endl;
     }
-
-    // Getter for name (for searching and deleting)
-    string getName() const {
-        return name;
-    }
 };
 
-// Function to insert a record
-void insertRecord(vector<PersonalRecord>& records) {
+void addRecord(vector<PersonalRecord>& records) {
     string name, dob, phone;
-    cout << "Enter Name: ";
+    cout << "\nEnter Name: ";
     getline(cin, name);
-    cout << "Enter Date of Birth (YYYY-MM-DD): ";
+    cout << "Enter DOB: ";
     getline(cin, dob);
     cout << "Enter Phone Number: ";
     getline(cin, phone);
 
     records.push_back(PersonalRecord(name, dob, phone));
-    cout << "Record inserted successfully.\n";
 }
 
-// Function to display all records
 void displayRecords(const vector<PersonalRecord>& records) {
-    if (records.empty()) {
-        cout << "No records available.\n";
-    } else {
-        for (size_t i = 0; i < records.size(); ++i) {
-            records[i].display();  // No error now, because display() is const
-        }
+    cout << "\nDisplaying all records:" << endl;
+    for (int i = 0; i < records.size(); i++) {
+        records[i].display();
     }
 }
 
-// Function to search for a record by name
+void sortRecords(vector<PersonalRecord>& records) {
+    for (int i = 0; i < records.size() - 1; i++) {
+        for (int j = i + 1; j < records.size(); j++) {
+            if (records[i].name > records[j].name) {
+                // Swap the records if they are in the wrong order
+                PersonalRecord temp = records[i];
+                records[i] = records[j];
+                records[j] = temp;
+            }
+        }
+    }
+    cout << "\nRecords sorted by Name." << endl;
+}
+
 void searchRecord(const vector<PersonalRecord>& records) {
     string searchName;
-    cout << "Enter name to search: ";
+    cout << "\nEnter name to search: ";
     getline(cin, searchName);
 
-    for (size_t i = 0; i < records.size(); ++i) {
-        if (records[i].getName() == searchName) {
-            cout << "Record found:\n";
-            records[i].display();  // No error now, because display() is const
+    for (int i = 0; i < records.size(); i++) {
+        if (records[i].name == searchName) {
+            cout << "\nRecord found:\n";
+            records[i].display();
             return;
         }
     }
 
-    cout << "Record not found.\n";
+    cout << "\nRecord not found!" << endl;
 }
 
-// Function to sort records by name
-void sortRecords(vector<PersonalRecord>& records) {
-    sort(records.begin(), records.end(), [](const PersonalRecord& a, const PersonalRecord& b) {
-        return a.getName() < b.getName();
-    });
-    cout << "Records sorted by name.\n";
-}
-
-// Function to delete a record by name
-void deleteRecord(vector<PersonalRecord>& records) {
-    string deleteName;
-    cout << "Enter name to delete: ";
-    getline(cin, deleteName);
-
-    for (size_t i = 0; i < records.size(); ++i) {
-        if (records[i].getName() == deleteName) {
-            records.erase(records.begin() + i);
-            cout << "Record deleted successfully.\n";
-            return;
-        }
-    }
-
-    cout << "Record not found.\n";
-}
-
-// Main function with menu
 int main() {
     vector<PersonalRecord> records;
     int choice;
 
     do {
-        cout << "\n***** Menu *****\n";
-        cout << "1. Insert\n";
-        cout << "2. Display\n";
-        cout << "3. Search\n";
-        cout << "4. Sort\n";
-        cout << "5. Delete\n";
-        cout << "6. Exit\n";
-        cout << "Enter your choice: ";
+        cout << "\nMenu:"
+             << "\n1. Add Record"
+             << "\n2. Display Records"
+             << "\n3. Sort Records by Name"
+             << "\n4. Search Record by Name"
+             << "\n5. Exit"
+             << "\nEnter your choice: ";
         cin >> choice;
-        cin.ignore();  // Consume newline character left in the buffer
+        cin.ignore();  // To clear the newline character from input buffer
 
         switch (choice) {
             case 1:
-                insertRecord(records);
+                addRecord(records);
                 break;
             case 2:
                 displayRecords(records);
                 break;
             case 3:
-                searchRecord(records);
-                break;
-            case 4:
                 sortRecords(records);
                 break;
-            case 5:
-                deleteRecord(records);
+            case 4:
+                searchRecord(records);
                 break;
-            case 6:
-                cout << "Exiting program...\n";
+            case 5:
+                cout << "\nExiting program." << endl;
                 break;
             default:
-                cout << "Invalid choice. Please try again.\n";
+                cout << "\nInvalid choice! Please try again." << endl;
         }
-    } while (choice != 6);
+    } while (choice != 5);
 
     return 0;
 }
+
 
 
 
