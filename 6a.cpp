@@ -1,165 +1,124 @@
 #include <iostream>
 #include <vector>
-#include <algorithm>
 #include <string>
 
 using namespace std;
 
-// Define a class to hold Item records
-class Item {
-private:
+class ItemRecord {
+public:
     string itemCode;
-    string itemName;
+    string name;
     double cost;
     int quantity;
 
-public:
-    // Constructor to initialize an item
-    Item(string code, string name, double c, int qty) : itemCode(code), itemName(name), cost(c), quantity(qty) {}
+    // Constructor to initialize the item record
+    ItemRecord(string code, string n, double c, int q) : itemCode(code), name(n), cost(c), quantity(q) {}
 
     // Function to display item details
-    void display() const {
-        cout << "Item Code: " << itemCode << ", Item Name: " << itemName
-             << ", Cost: " << cost << ", Quantity: " << quantity << endl;
-    }
-
-    // Getter for item code (for searching and deleting)
-    string getItemCode() const {
-        return itemCode;
-    }
-
-    // Getter for item name (for sorting)
-    string getItemName() const {
-        return itemName;
-    }
-
-    // Getter for item cost
-    double getCost() const {
-        return cost;
-    }
-
-    // Getter for item quantity
-    int getQuantity() const {
-        return quantity;
+    void display()  {
+        cout << "Item Code: " << itemCode << ", Name: " << name << ", Cost: " << cost << ", Quantity: " << quantity << endl;
     }
 };
 
-// Function to insert a new item
-void insertItem(vector<Item>& items) {
-    string code, name;
+void addItemRecord(vector<ItemRecord>& records) {
+    string itemCode, name;
     double cost;
     int quantity;
 
-    cout << "Enter Item Code: ";
-    getline(cin, code);
-    cout << "Enter Item Name: ";
+    cout << "\nEnter Item Code: ";
+    getline(cin, itemCode);
+    cout << "Enter Name: ";
     getline(cin, name);
-    cout << "Enter Item Cost: ";
+    cout << "Enter Cost: ";
     cin >> cost;
-    cout << "Enter Item Quantity: ";
+    cout << "Enter Quantity: ";
     cin >> quantity;
-    cin.ignore();  // Clear the newline character left in the input buffer
+    cin.ignore();  // To clear the newline character from input buffer
 
-    items.push_back(Item(code, name, cost, quantity));
-    cout << "Item inserted successfully.\n";
+    records.push_back(ItemRecord(itemCode, name, cost, quantity));
 }
 
-// Function to display all items
-void displayItems(const vector<Item>& items) {
-    if (items.empty()) {
-        cout << "No items available.\n";
-    } else {
-        for (size_t i = 0; i < items.size(); ++i) {
-            items[i].display();
-        }
+void displayItemRecords( vector<ItemRecord>& records) {
+    cout << "\nDisplaying all item records:" << endl;
+    for (int i = 0; i < records.size(); i++) {
+        records[i].display();
     }
 }
 
-// Function to search for an item by item code
-void searchItem(const vector<Item>& items) {
-    string searchCode;
-    cout << "Enter Item Code to search: ";
-    getline(cin, searchCode);
+void sortItemRecords(vector<ItemRecord>& records) {
+    for (int i = 0; i < records.size() - 1; i++) {
+        for (int j = i + 1; j < records.size(); j++) {
+            if (records[i].itemCode > records[j].itemCode) {
+                // Swap the records if they are in the wrong order based on itemCode
+                ItemRecord temp = records[i];
+                records[i] = records[j];
+                records[j] = temp;
+            }
+        }
+    }
+    cout << "\nItem records sorted by Item Code." << endl;
+}
 
-    for (size_t i = 0; i < items.size(); ++i) {
-        if (items[i].getItemCode() == searchCode) {
-            cout << "Item found:\n";
-            items[i].display();
+void searchItemRecord( vector<ItemRecord>& records) {
+    string searchItemCode;
+    cout << "\nEnter Item Code to search: ";
+    getline(cin, searchItemCode);
+
+    for (int i = 0; i < records.size(); i++) {
+        if (records[i].itemCode == searchItemCode) {
+            cout << "\nRecord found:\n";
+            records[i].display();
             return;
         }
     }
 
-    cout << "Item not found.\n";
+    cout << "\nRecord not found!" << endl;
 }
 
-// Function to sort items by item name
-void sortItems(vector<Item>& items) {
-    sort(items.begin(), items.end(), [](const Item& a, const Item& b) {
-        return a.getItemName() < b.getItemName();
-    });
-    cout << "Items sorted by name.\n";
-}
-
-// Function to delete an item by item code
-void deleteItem(vector<Item>& items) {
-    string deleteCode;
-    cout << "Enter Item Code to delete: ";
-    getline(cin, deleteCode);
-
-    for (size_t i = 0; i < items.size(); ++i) {
-        if (items[i].getItemCode() == deleteCode) {
-            items.erase(items.begin() + i);
-            cout << "Item deleted successfully.\n";
-            return;
-        }
-    }
-
-    cout << "Item not found.\n";
-}
-
-// Main function with menu
 int main() {
-    vector<Item> items;
+    vector<ItemRecord> records;
     int choice;
 
     do {
-        cout << "\n***** Menu *****\n";
-        cout << "1. Insert Item\n";
-        cout << "2. Display Items\n";
-        cout << "3. Search Item\n";
-        cout << "4. Sort Items\n";
-        cout << "5. Delete Item\n";
-        cout << "6. Exit\n";
-        cout << "Enter your choice: ";
+        cout << "\nMenu:"
+             << "\n1. Add Item Record"
+             << "\n2. Display Item Records"
+             << "\n3. Sort Item Records by Item Code"
+             << "\n4. Search Item Record by Item Code"
+             << "\n5. Exit"
+             << "\nEnter your choice: ";
         cin >> choice;
-        cin.ignore();  // Consume newline character left in the buffer
+        cin.ignore();  // To clear the newline character from input buffer
 
         switch (choice) {
             case 1:
-                insertItem(items);
+                addItemRecord(records);
                 break;
             case 2:
-                displayItems(items);
+                displayItemRecords(records);
                 break;
             case 3:
-                searchItem(items);
+                sortItemRecords(records);
                 break;
             case 4:
-                sortItems(items);
+                searchItemRecord(records);
                 break;
             case 5:
-                deleteItem(items);
-                break;
-            case 6:
-                cout << "Exiting program...\n";
+                cout << "\nExiting program." << endl;
                 break;
             default:
-                cout << "Invalid choice. Please try again.\n";
+                cout << "\nInvalid choice! Please try again." << endl;
         }
-    } while (choice != 6);
+    } while (choice != 5);
 
     return 0;
 }
+
+ 
+   
+
+
+
 
 
 
