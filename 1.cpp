@@ -1,30 +1,30 @@
 #include<iostream>
 using namespace std;
 
-class complex
-{
+class complex {
     float real, imag;
+    
 public:
     complex(float r = 0, float i = 0) {
         real = r;
         imag = i;
     }
 
-    complex operator+(complex &c1) {
+    complex operator+ (complex &c1) {
         complex c3;
         c3.real = real + c1.real;
         c3.imag = imag + c1.imag;
         return c3;
     }
 
-    complex operator*(complex &c1) {
+    complex operator* (complex &c1) {
         complex c3;
         c3.real = real * c1.real - imag * c1.imag;
         c3.imag = real * c1.imag + imag * c1.real;
         return c3;
     }
 
-    friend istream & operator>>(istream &in, complex &c2) {
+    friend istream  &operator>>(istream &in, complex &c2) {
         cout << "Enter the real part: ";
         in >> c2.real;
         cout << "Enter the imaginary part: ";
@@ -32,7 +32,7 @@ public:
         return in;
     }
 
-    friend ostream & operator<<(ostream &out, complex &c2) {
+    friend ostream &operator<<(ostream &out, complex &c2) {
         out << c2.real << "+" << c2.imag << "i";
         return out;
     }
@@ -50,6 +50,7 @@ int main() {
     cout << "Product: " << c3 << endl;
     return 0;
 }
+
 
 
 
